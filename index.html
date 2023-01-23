@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- index.html -->
+<form method="post" action="{{ url_for('add_album') }}" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <label for="{{ form.band_name.id }}">Band Name:</label>
+    {{ form.band_name(size=32) }}
+    <br>
+    <label for="{{ form.album_title.id }}">Album Title:</label>
+    {{ form.album_title(size=32) }}
+    <br>
+    <label for="{{ form.cover_art.id }}">Cover Art:</label>
+    {{ form.cover_art() }}
+    <br>
+    <input type="submit" value="Add Album">
+</form>
+
+<table>
+    <tr>
+        <th>Band Name</th>
+        <th>Album Title</th>
+        <th>Actions</th>
+    </tr>
+    {% for album in albums %}
+        <tr>
+            <td>{{ album.band_name }}</td>
+            <td>{{ album.album_title }}</td>
+            <td>
+                <a href="{{ url_for('edit_album', album_id=album.id) }}">Edit</a>
+                <a href="{{ url_for('delete_album', album_id=album.id) }}">Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+<!-- edit_album.html -->
+<form method="post" action="{{ url_for('edit_album', album_id=album_id) }}" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <label for="{{ form.band_name.id }}">Band Name:</label>
+    {{ form.band_name(size=32) }}
+    <br>
+    <label for="{{ form.album_title.id }}">Album Title:</label>
+    {{ form.album_title(size=32) }}
+    <br>
+    <label for="{{ form.cover_art.id }}">Cover Art:</label>
+    {{ form.cover_art() }}
+    <br>
+    <input type="submit" value="Save Changes">
+    <a href="{{ url_for('delete_album', album_id=album_id) }}">Delete Album</a>
+</form>
+</body>
+</html>
